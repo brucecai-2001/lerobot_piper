@@ -7,6 +7,8 @@ conda activate lerobot
 
 Install 🤗 LeRobot:
 ```bash
+git clone git@github.com:brucecai-2001/lerobot_piper.git
+git checkout piper
 pip install -e . -i https://pypi.tuna.tsinghua.edu.cn/simple
 
 pip uninstall numpy
