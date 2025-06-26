@@ -1,31 +1,23 @@
-# Prepare
+Prepare
+Host: SO101 follower
+Client: SO101 leader
 
-SO101 leader + laptop
-SO101 follower + Raspberry Pi
+1. Get the client’s IP address
 
-1. On Pi, run
+2. On host, ping the client, make sure two computers are connected
 ```shell
-hostname -I
-```
-Get the Raspberry Pi’s IP address
-
-2. On laptop, ping
-```shell
-ping <pi_ip_address>
+ping <client_ip_address>
 ```
 
-3. Install the lerobot on your Pi
+3. Install the lerobot on your host and client
 
-
-
-# Teleoperate
-1. SSH into your Raspberry Pi
+Teleoperate
+1. SSH into your host
 ```shell
-python -m lerobot.common.robots.so101_follower_remote.so101_host
+python -m lerobot.common.robots.so101_remote.so101_host
 ```
-
   
-2. Then on your lapto
+2. Then on your client
 ```shell
 python examples/so101_remote/teleoperate.py
 ```
