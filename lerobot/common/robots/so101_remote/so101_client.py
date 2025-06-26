@@ -43,27 +43,19 @@ class SO101Client(Robot):
 
         self.last_remote_state = {}
 
-        self.polling_timeout_ms = config.polling_timeout_ms
-        self.connect_timeout_s = config.connect_timeout_s
-
-        self.zmq_context = None
-        self.zmq_cmd_socket = None
-        self.zmq_observation_socket = None
-
-        self.last_frames = {}
-
-        self.last_remote_state = {}
+        self._is_connected = False
+        self.logs = {}
 
     @cached_property
     def _state_ft(self) -> dict[str, type]:
         return dict.fromkeys(
             (
-                "arm_shoulder_pan.pos",
-                "arm_shoulder_lift.pos",
-                "arm_elbow_flex.pos",
-                "arm_wrist_flex.pos",
-                "arm_wrist_roll.pos",
-                "arm_gripper.pos"
+                "shoulder_pan.pos",
+                "shoulder_lift.pos",
+                "elbow_flex.pos",
+                "wrist_flex.pos",
+                "wrist_roll.pos",
+                "gripper.pos"
             ),
             float,
         )
