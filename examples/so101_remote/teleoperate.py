@@ -1,10 +1,7 @@
-"""
-Run this script on the laptop.
-"""
 from lerobot.common.robots.so101_remote import SO101Client, SO101ClientConfig
 from lerobot.common.teleoperators.so101_leader import SO101Leader, SO101LeaderConfig
 
-robot_config = SO101ClientConfig(remote_ip="127.0.0.1") # remote ip is the ip of your client
+robot_config = SO101ClientConfig(remote_ip="192.168.31.122")
 
 teleop_arm_config = SO101LeaderConfig(
     port="/dev/tty.usbmodem5A680114791",
