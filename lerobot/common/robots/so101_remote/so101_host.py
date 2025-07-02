@@ -39,7 +39,7 @@ class SO101Host:
 def main():
     logging.basicConfig(level=logging.INFO)
     logging.info("Configuring SO101")
-    robot_config = SO101FollowerConfig(port="/dev/tty.usbmodem5A680113741", id="left_follower_arm")
+    robot_config = SO101FollowerConfig(port="/dev/ttyACM0", id="left_follower_arm", calibration_dir="src/lerobot_calibration")
     robot = SO101Follower(robot_config)
 
     logging.info("Connecting SO101")
