@@ -41,7 +41,7 @@ class SO101Host:
 def main():
     logging.basicConfig(level=logging.INFO)
     logging.info("Configuring SO101")
-    robot_config = SO101FollowerConfig(port="/dev/ttyACM0", id="left_follower_arm", calibration_dir=Path("src/lerobot_calibration"))
+    robot_config = SO101FollowerConfig(port="/dev/ttyACM0", id="left_follower_arm", calibration_dir=Path("/home/caixinyu/src/lerobot_calibration"))
     robot = SO101Follower(robot_config)
 
     logging.info("Connecting SO101")
