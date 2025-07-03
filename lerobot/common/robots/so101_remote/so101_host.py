@@ -8,6 +8,8 @@ import zmq
 
 from lerobot.common.constants import OBS_IMAGES
 
+from pathlib import Path
+
 from .config_so101_remote import SO101HostConfig
 from lerobot.common.robots.so101_follower import SO101FollowerConfig
 from lerobot.common.robots.so101_follower import SO101Follower
@@ -39,7 +41,7 @@ class SO101Host:
 def main():
     logging.basicConfig(level=logging.INFO)
     logging.info("Configuring SO101")
-    robot_config = SO101FollowerConfig(port="/dev/ttyACM0", id="left_follower_arm", calibration_dir="src/lerobot_calibration")
+    robot_config = SO101FollowerConfig(port="/dev/ttyACM0", id="left_follower_arm", calibration_dir=Path("src/lerobot_calibration"))
     robot = SO101Follower(robot_config)
 
     logging.info("Connecting SO101")
