@@ -1,2 +1,2 @@
 from .config_xboxcontroller import XboxControllerConfig
-from .teleop_xboxcontroller import XboxController
+from .teleop_xboxcontroller import XboxControllerTeleop

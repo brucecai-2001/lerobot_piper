@@ -244,9 +244,9 @@ class LeKiwiClient(Robot):
             "theta.vel": theta_cmd,
         }
     
-    def __from_xboxController_to_base_action(self, controller_state):
+    def _from_xboxController_to_base_action(self, controller_state):
         # Speed control, hard code only for now.
-        xy_speed = 0.25  # e.g. 0.1, 0.25, or 0.4
+        xy_speed = 0.1  # e.g. 0.1, 0.25, or 0.4
         theta_speed = 30  # e.g. 30, 60, or 90
 
         x_cmd = 0.0  # m/s forward/backward

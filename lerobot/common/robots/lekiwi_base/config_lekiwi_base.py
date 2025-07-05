@@ -1,5 +1,4 @@
 from dataclasses import dataclass, field
-from typing import Literal
 
 from ..config import RobotConfig
 
@@ -7,7 +6,7 @@ from ..config import RobotConfig
 @RobotConfig.register_subclass("lekiwi_base")
 @dataclass
 class LeKiwiBaseConfig(RobotConfig):
-    port = "/dev/ttyACM0"  # port to connect to the bus
+    port: str = "/dev/ttyACM0"  # port to connect to the bus
 
     disable_torque_on_disconnect: bool = True
 
@@ -30,7 +29,7 @@ class LeKiwiBaseHostConfig:
     connection_time_s: int = 30
 
     # Watchdog: stop the robot if no command is received for over 0.5 seconds.
-    watchdog_timeout_ms: int = 500
+    watchdog_timeout_ms: int = 15000
 
     # If robot jitters decrease the frequency and monitor cpu load with `top` in cmd
     max_loop_freq_hz: int = 30
@@ -43,8 +42,6 @@ class LeKiwiBaseClientConfig(RobotConfig):
     remote_ip: str
     port_zmq_cmd: int = 5555
     port_zmq_observations: int = 5556
-
-    teleop_type: Literal["keyboard", "xbox"] = "keyboard"
 
     teleop_keys: dict[str, str] = field(
         default_factory=lambda: {

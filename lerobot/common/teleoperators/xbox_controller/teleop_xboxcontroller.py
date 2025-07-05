@@ -13,7 +13,7 @@ XBOX_CONTROLLER = {
     "right_stick_y": 3,         # 右摇杆 Y 轴
 }
 
-class XboxController(Teleoperator):
+class XboxControllerTeleop(Teleoperator):
     """Xbox Controllrt Teleoperator
        V0.1 axes only    
     """
@@ -159,7 +159,7 @@ class XboxController(Teleoperator):
 
 if __name__ == '__main__':
     config = XboxControllerConfig(id = "xbox_controller_wireless")
-    controller = XboxController(config)
+    controller = XboxControllerTeleop(config)
     controller.connect()
     while True:
         axes_state = controller.get_action()
