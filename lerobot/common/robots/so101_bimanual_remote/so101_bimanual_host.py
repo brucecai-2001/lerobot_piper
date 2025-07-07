@@ -3,6 +3,8 @@ import json
 import logging
 import time
 
+from pathlib import Path
+
 import cv2
 import zmq
 
@@ -38,10 +40,11 @@ def main():
     logging.basicConfig(level=logging.INFO)
     logging.info("Configuring SO101 Bimanual")
     robot_config = SO101BimanualFollowerConfig(
-        port_left="/dev/tty.usbmodem5A680113741",
-        port_right="/dev/tty.usbmodem5A680125671",
+        port_left="/dev/ttyACM0",
+        port_right="/dev/ttyACM1",
         left_id="left_follower_arm",
-        right_id="right_follower_arm"
+        right_id="right_follower_arm",
+        calibration_dir=Path("/home/caixinyu/src/lerobot_calibration")
     )
     robot = SO101BimanualFollower(robot_config)
 

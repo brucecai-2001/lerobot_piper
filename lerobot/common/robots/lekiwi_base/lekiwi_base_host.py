@@ -35,7 +35,7 @@ class LeKiwiHost:
 
 def main():
     logging.info("Configuring LeKiwi Base")
-    robot_config = LeKiwiBaseConfig(port="/dev/tty.usbmodem59700724451")
+    robot_config = LeKiwiBaseConfig(port="/dev/ttyACM2")
     robot = LekiwiBase(robot_config)
 
     logging.info("Connecting LeKiwi Base")

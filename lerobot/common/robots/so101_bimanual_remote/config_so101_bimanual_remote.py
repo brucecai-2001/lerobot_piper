@@ -14,13 +14,13 @@ class SO101BimanualHostConfig:
     connection_time_s: int = 30
 
     # Watchdog: stop the robot if no command is received for over 0.5 seconds.
-    watchdog_timeout_ms: int = 500
+    watchdog_timeout_ms: int = 15000
 
     # If robot jitters decrease the frequency and monitor cpu load with `top` in cmd
     max_loop_freq_hz: int = 30
 
 
-@RobotConfig.register_subclass("so101_client")
+@RobotConfig.register_subclass("so101_bimanual_client")
 @dataclass
 class SO101BimanualClientConfig(RobotConfig):
     # Network Configuration

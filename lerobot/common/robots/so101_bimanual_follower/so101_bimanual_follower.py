@@ -27,13 +27,15 @@ class SO101BimanualFollower(Robot):
         left_follower_config = SO101FollowerConfig(
             port=self.config.port_left,
             id=self.config.left_id,
-            cameras=self.config.left_cameras
+            cameras=self.config.left_cameras,
+            calibration_dir=self.config.calibration_dir
         )
 
         right_follower_config = SO101FollowerConfig(
             port=self.config.port_right,
             id=self.config.right_id,
-            cameras=self.config.right_cameras
+            cameras=self.config.right_cameras,
+            calibration_dir=self.config.calibration_dir
         )
 
         self.left_follower = SO101Follower(left_follower_config)
