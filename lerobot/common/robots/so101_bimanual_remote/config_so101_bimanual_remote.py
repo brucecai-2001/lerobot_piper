@@ -11,7 +11,7 @@ class SO101BimanualHostConfig:
     port_zmq_observations: int = 5558
 
     # Duration of the application
-    connection_time_s: int = 30
+    connection_time_s: int = 300
 
     # Watchdog: stop the robot if no command is received for over 0.5 seconds.
     watchdog_timeout_ms: int = 15000

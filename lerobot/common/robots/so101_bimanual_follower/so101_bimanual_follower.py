@@ -37,7 +37,7 @@ class SO101BimanualFollower(Robot):
             cameras=self.config.right_cameras,
             calibration_dir=self.config.calibration_dir
         )
-
+        self.id = config.id
         self.left_follower = SO101Follower(left_follower_config)
         self.right_follower = SO101Follower(right_follower_config)
 

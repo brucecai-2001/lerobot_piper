@@ -7,7 +7,6 @@ from ..config import RobotConfig
 @RobotConfig.register_subclass("so101_bimanual_follower")
 @dataclass
 class SO101BimanualFollowerConfig(RobotConfig):
-    id: str = "xlerobot"
     
     # Port to connect to the arm
     port_left: str
