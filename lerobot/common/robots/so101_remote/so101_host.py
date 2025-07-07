@@ -48,7 +48,7 @@ def main():
     robot.connect()
 
     logging.info("Starting HostAgent")
-    host_config = SO101HostConfig()
+    host_config = SO101HostConfig(port_zmq_cmd=5557, port_zmq_observations=5558)
     host = SO101Host(host_config)
 
     last_cmd_time = time.time()

@@ -36,15 +36,20 @@ class SO101BimanualHost:
 
 def main():
     logging.basicConfig(level=logging.INFO)
-    logging.info("Configuring SO101")
-    robot_config = SO101BimanualFollowerConfig()
+    logging.info("Configuring SO101 Bimanual")
+    robot_config = SO101BimanualFollowerConfig(
+        port_left="/dev/tty.usbmodem5A680113741",
+        port_right="/dev/tty.usbmodem5A680125671",
+        left_id="left_follower_arm",
+        right_id="right_follower_arm"
+    )
     robot = SO101BimanualFollower(robot_config)
 
-    logging.info("Connecting SO101")
+    logging.info("Connecting SO101 Bimanual")
     robot.connect()
 
     logging.info("Starting HostAgent")
-    host_config = SO101BimanualHost()
+    host_config = SO101BimanualHostConfig(port_zmq_cmd=5557, port_zmq_observations=5558)
     host = SO101BimanualHost(host_config)
 
     last_cmd_time = time.time()

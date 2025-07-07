@@ -6,7 +6,10 @@ from lerobot.common.teleoperators.so101_bimanual_leader import SO101BimanualLead
 
 robot_config = SO101BimanualClientConfig(remote_ip="127.0.0.1") # remote ip is the ip of your client
 teleop_arm_config = SO101BimanualLeaderConfig(
-   
+    port_left= "/dev/tty.usbmodem5A680114791",
+    port_right="/dev/tty.usbmodem5A680126181",
+    left_id="left_leader_arm",
+    right_id="right_leader_arm"
 )
 
 robot = SO101BimanualClient(robot_config)

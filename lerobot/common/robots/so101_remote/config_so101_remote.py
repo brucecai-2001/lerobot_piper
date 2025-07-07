@@ -23,8 +23,8 @@ from ..config import RobotConfig
 @dataclass
 class SO101HostConfig:
     # Network Configuration
-    port_zmq_cmd: int = 5555
-    port_zmq_observations: int = 5556
+    port_zmq_cmd: int = 5557
+    port_zmq_observations: int = 5558
 
     # Duration of the application
     connection_time_s: int = 30
@@ -41,8 +41,8 @@ class SO101HostConfig:
 class SO101ClientConfig(RobotConfig):
     # Network Configuration
     remote_ip: str
-    port_zmq_cmd: int = 5555
-    port_zmq_observations: int = 5556
+    port_zmq_cmd: int = 5557
+    port_zmq_observations: int = 5558
 
     polling_timeout_ms: int = 15
     connect_timeout_s: int = 5

@@ -42,7 +42,7 @@ def main():
     robot.connect()
 
     logging.info("Starting HostAgent")
-    host_config = LeKiwiBaseHostConfig()
+    host_config = LeKiwiBaseHostConfig(port_zmq_cmd=5555, port_zmq_observations=5556)
     host = LeKiwiHost(host_config)
 
     last_cmd_time = time.time()
