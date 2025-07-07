@@ -115,6 +115,8 @@ class SO101BimanualClient(Robot):
         socks = dict(poller.poll(self.connect_timeout_s * 1000))
         if self.zmq_observation_socket not in socks or socks[self.zmq_observation_socket] != zmq.POLLIN:
             raise DeviceNotConnectedError("Timeout waiting for SO101 Host to connect expired.")
+        
+        self._is_connected = True
     
     def disconnect(self):
         """Cleans ZMQ comms"""
