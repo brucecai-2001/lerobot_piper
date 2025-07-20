@@ -4,6 +4,7 @@ from functools import cached_property
 from typing import Any
 
 from lerobot.common.errors import DeviceNotConnectedError
+from lerobot.common.cameras.utils import make_cameras_from_configs
 
 from ..robot import Robot
 from ..utils import ensure_safe_goal_position
@@ -23,23 +24,25 @@ class SO101BimanualFollower(Robot):
 
     def __init__(self, config: SO101BimanualFollowerConfig):
         self.config = config
+        self.id = config.id
 
         left_follower_config = SO101FollowerConfig(
             port=self.config.port_left,
             id=self.config.left_id,
-            cameras=self.config.left_cameras,
-            calibration_dir=self.config.calibration_dir
+            calibration_dir=self.config.calibration_dir,
+            cameras={}
         )
 
         right_follower_config = SO101FollowerConfig(
             port=self.config.port_right,
             id=self.config.right_id,
-            cameras=self.config.right_cameras,
-            calibration_dir=self.config.calibration_dir
+            calibration_dir=self.config.calibration_dir,
+            cameras={}
         )
-        self.id = config.id
+
         self.left_follower = SO101Follower(left_follower_config)
         self.right_follower = SO101Follower(right_follower_config)
+        self.cameras = make_cameras_from_configs(config.cameras)
 
     @property
     def _motors_ft(self) -> dict[str, type]:
@@ -52,19 +55,9 @@ class SO101BimanualFollower(Robot):
     
     @property
     def _cameras_ft(self) -> dict[str, tuple]:
-        left_cam_ft = {
-            cam: (self.config.left_cameras[cam].height, self.config.left_cameras[cam].width, 3) for cam in self.left_follower.cameras
+        return {
+            cam: (self.config.cameras[cam].height, self.config.cameras[cam].width, 3) for cam in self.cameras
         }
-
-        right_cam_ft = {
-            cam: (self.config.right_cameras[cam].height, self.config.right_cameras[cam].width, 3) for cam in self.right_follower.cameras
-        }
-
-        cam_ft = {}
-        cam_ft.update(left_cam_ft)
-        cam_ft.update(right_cam_ft)
-
-        return cam_ft
     
     @cached_property
     def observation_features(self) -> dict[str, type | tuple]:
@@ -93,6 +86,9 @@ class SO101BimanualFollower(Robot):
         self.left_follower.connect(calibrate)
         self.right_follower.connect(calibrate)
 
+        for cam in self.cameras.values():
+            cam.connect()
+
     def calibrate(self) -> None:
         self.left_follower.calibrate()
         self.right_follower.calibrate()
@@ -116,27 +112,17 @@ class SO101BimanualFollower(Robot):
 
         left_obs_dict = self.left_follower.bus.sync_read("Present_Position")
         left_obs_dict = {f"left_{motor}.pos": val for motor, val in left_obs_dict.items()}
+        obs_dict.update(left_obs_dict)
+
         right_obs_dict = self.right_follower.bus.sync_read("Present_Position")
         right_obs_dict = {f"right_{motor}.pos": val for motor, val in right_obs_dict.items()}
-
-        dt_ms = (time.perf_counter() - start) * 1e3
-        logger.debug(f"{self} read state: {dt_ms:.1f}ms")
-
-        # Capture images from left cameras
-        for cam_key, cam in self.left_follower.cameras.items():
-            start = time.perf_counter()
-            left_obs_dict[cam_key] = cam.async_read()
-            dt_ms = (time.perf_counter() - start) * 1e3
-            logger.debug(f"{self} left read {cam_key}: {dt_ms:.1f}ms")
-
-        for cam_key, cam in self.right_follower.cameras.items():
-            start = time.perf_counter()
-            right_obs_dict[cam_key] = cam.async_read()
-            dt_ms = (time.perf_counter() - start) * 1e3
-            logger.debug(f"{self} right read {cam_key}: {dt_ms:.1f}ms")
-        
-        obs_dict.update(left_obs_dict)
         obs_dict.update(right_obs_dict)
+
+        for cam_key, cam in self.cameras.items():
+            start = time.perf_counter()
+            obs_dict[cam_key] = cam.async_read()
+            dt_ms = (time.perf_counter() - start) * 1e3
+            logger.debug(f"{self} read {cam_key}: {dt_ms:.1f}ms")
 
         return obs_dict
 
@@ -171,6 +157,9 @@ class SO101BimanualFollower(Robot):
     def disconnect(self):
         self.left_follower.disconnect()
         self.right_follower.disconnect()
+
+        for cam in self.cameras.values():
+            cam.disconnect()
     
     
     

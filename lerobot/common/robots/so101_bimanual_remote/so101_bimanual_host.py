@@ -39,12 +39,16 @@ class SO101BimanualHost:
 def main():
     logging.basicConfig(level=logging.INFO)
     logging.info("Configuring SO101 Bimanual")
+    
     robot_config = SO101BimanualFollowerConfig(
         id = "xlerobot",
         port_left="/dev/ttyACM0",
         port_right="/dev/ttyACM1",
         left_id="left_follower_arm",
         right_id="right_follower_arm",
+        cameras={"left": {"type": "opencv", "index_or_path": 0, "width": 1920, "height": 1080, "fps": 30}, 
+                 "right": {"type": "opencv", "index_or_path": 0, "width": 1920, "height": 1080, "fps": 30}
+                },
         calibration_dir=Path("/home/caixinyu/src/lerobot_calibration")
     )
     robot = SO101BimanualFollower(robot_config)
@@ -87,16 +91,7 @@ def main():
             last_observation = robot.get_observation()
 
             # Encode ndarrays to base64 strings
-            for cam_key, _ in robot.left_follower.cameras.items():
-                ret, buffer = cv2.imencode(
-                    ".jpg", last_observation[f"{OBS_IMAGES}.{cam_key}"], [int(cv2.IMWRITE_JPEG_QUALITY), 90]
-                )
-                if ret:
-                    last_observation[f"{OBS_IMAGES}.{cam_key}"] = base64.b64encode(buffer).decode("utf-8")
-                else:
-                    last_observation[f"{OBS_IMAGES}.{cam_key}"] = ""
-            
-            for cam_key, _ in robot.right_follower.cameras.items():
+            for cam_key, _ in robot.cameras.items():
                 ret, buffer = cv2.imencode(
                     ".jpg", last_observation[f"{OBS_IMAGES}.{cam_key}"], [int(cv2.IMWRITE_JPEG_QUALITY), 90]
                 )

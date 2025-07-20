@@ -22,9 +22,8 @@ class SO101BimanualFollowerConfig(RobotConfig):
     # the number of motors in your follower arms.
     max_relative_target: int | None = None
 
-    # cameras
-    left_cameras: dict[str, CameraConfig] = field(default_factory=dict)
-    right_cameras: dict[str, CameraConfig] = field(default_factory=dict)
-
+    # cameras (shared between both arms)
+    cameras: dict[str, CameraConfig] = field(default_factory=dict)
+    
     # Set to `True` for backward compatibility with previous policies/dataset
     use_degrees: bool = False
