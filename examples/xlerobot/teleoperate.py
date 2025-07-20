@@ -11,6 +11,7 @@ from lerobot.common.teleoperators.xbox_controller import XboxControllerTeleop, X
 
 if __name__ == '__main__':
     # config
+    remote_ip = "192.168.31.122"
     lekiwi_base_enable = True # use the lekiwi base or not
     lekiwi_teleop_type = "xboxcontroller" # keyboard or xboxcontroller
 
