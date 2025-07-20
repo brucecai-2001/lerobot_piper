@@ -198,6 +198,7 @@ def record(cfg: RecordConfig) -> LeRobotDataset:
         left_id="left_leader_arm",
         right_id="right_leader_arm"
     )
+    
     robot = SO101BimanualClient(robot_config)
     teleop = SO101BimanualLeader(teleop_arm_config)
 
