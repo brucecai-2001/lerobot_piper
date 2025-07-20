@@ -189,7 +189,8 @@ def record(cfg: RecordConfig) -> LeRobotDataset:
         _init_rerun(session_name="recording")
 
     # remote camera, should be equal to the host
-    cameras = ["{left: {type: opencv, index_or_path: 0, width: 1920, height: 1080, fps: 30}}", "{right: {type: opencv, index_or_path: 1, width: 1920, height: 1080, fps: 30}}"]
+    cameras = {"left": {"type": "opencv", "index_or_path": 0, "width": 1920, "height": 1080, "fps": 30}, 
+               "right": {"type": "opencv", "index_or_path": 0, "width": 1920, "height": 1080, "fps": 30}}
     robot_config = SO101BimanualClientConfig(remote_ip="127.0.0.1") # remote ip is the ip of your client
     teleop_arm_config = SO101BimanualLeaderConfig(
         port_left= "/dev/tty.usbmodem5A680114791",
@@ -197,7 +198,6 @@ def record(cfg: RecordConfig) -> LeRobotDataset:
         left_id="left_leader_arm",
         right_id="right_leader_arm"
     )
-
     robot = SO101BimanualClient(robot_config)
     teleop = SO101BimanualLeader(teleop_arm_config)
 
